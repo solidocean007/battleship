@@ -3,14 +3,13 @@ var readlineSync = require('readline-sync');
 
 // Wait for user response.
 
-if (readlineSync.keyIn('Press any key to start the game.')) {
+if (readlineSync.keyIn('Press any key to start the game.   ')) {
   
 }
-console.log('Hello');
+
 // Place enemy ships on the board
 
 function buildGrid(size){
-  
   // create board pieces without middle block
   const lineOnTop = ' ______ ';
   const boxSpace = '|      |';
@@ -31,35 +30,69 @@ function buildGrid(size){
     for(let j = 0; j < size; j++) {
       let yNumber = values[j];
       gameBoardData.push({[[xChar]+[yNumber]]: null})
-    
     }
   }
   console.log(gameBoardData);
 }
 
-const boardSize = 3;
+const boardSize = 10;
 console.log(buildGrid(boardSize));
 
-const numberOfEnemys = 2;
+const numberOfEnemy = 2;
 
-for( let targets = 0; targets < numberOfEnemys; targets++) {
+for( let targets = 0; targets < numberOfEnemy; targets++) {
   let xCoord = Math.floor(Math.random() * (boardSize) + 1)
   console.log(xCoord);
 
-  if(xCoord === 1){ 
-    xCoord = 'A'
-  } else if(xCoord === 2){ 
-    xCoord = 'B'
-  } else if (xCoord === 3){ 
-    xCoord = 'C'
-  };
+// switch (xCoord) {
+//   case 1:
+//     xCoord = 'A';
+//     break;
+//   case 2:
+//     xCoord = 'B';
+//     break;
+//   case 3:
+//     xCoord = 'C';
+//     break;
+//   case 4:
+//     xCoord = 'D';
+//     break;
+//   case 5:
+//     xCoord = 'E';
+//     break;
+//   case 6:
+//     xCoord = 'F';
+//     break;
+//   case 7:
+//     xCoord = 'G';
+//     break;
+//   case 8:
+//     xCoord = 'H';
+//     break;
+//   case 9:
+//     xCoord = 'I';
+//     break;
+//   case 10:
+//     xCoord = 'J';
+//     break;
+// }
+
+ xCoord === 1 ? xCoord = 'A'
+        :xCoord === 2 ? xCoord = 'B'
+        :xCoord === 3 ? xCoord = 'C'
+        :xCoord === 4 ? xCoord = 'D'
+        :xCoord === 5 ? xCoord = 'E'
+        :xCoord === 6 ? xCoord = 'F'
+        :xCoord === 7 ? xCoord = 'G'
+        :xCoord === 8 ? xCoord = 'H'
+        :xCoord === 9 ? xCoord = 'I'
+        :xCoord = 'J'
 
   let yCoord = Math.floor(Math.random() * (3) + 1)
 
   const firstEnemyShip = ({[xCoord + yCoord]: null}); 
   console.log(firstEnemyShip);
   console.log(`Testing: Enemy Ship is at: ${[firstEnemyShip]}.`);
-
 }
 
 
