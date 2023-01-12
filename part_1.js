@@ -1,44 +1,38 @@
-
+const boardSize = 3;
 var readlineSync = require('readline-sync');
-
 // Wait for user response.
-
-if (readlineSync.keyIn('Press any key to start the game.')) {
-  
+if (readlineSync.keyIn('Press any key to start the game.   ')) {
 }
-console.log('Hello');
 // Place enemy ships on the board
 
-function buildGrid(size){
-  
+function buildGrid(size){ 
   // create board pieces without middle block
   const lineOnTop = ' ______ ';
   const boxSpace = '|      |';
   // no middle block
   const bottom = `|______|`;
-  
   // create the length of the pieces without the middle block
   const topLine = lineOnTop.repeat(size);
   const nextLine = boxSpace.repeat(size);
-  
-  // Create data plots for board.
+}
+// console.log(buildGrid(boardSize));
+
+// Create data plots for board.
+function gameBoardData(size){
   let gameBoardData = [];
   const letters = 'ABCDEFGHIJ';                               // declare letter string for x coordinates                              // begin cycling through letters
   const values = ['1','2','3','4','5','6','7','8','9','10'];
-
-  for(let i = 0; i < size; i++) {
-    let xChar = letters[i];
-    for(let j = 0; j < size; j++) {
-      let yNumber = values[j];
-      gameBoardData.push({[[xChar]+[yNumber]]: null})
-    
+    for(let i = 0; i < size; i++) {
+      let xChar = letters[i];
+      for(let j = 0; j < size; j++) {
+        let yNumber = values[j];
+        gameBoardData.push({[[xChar]+[yNumber]]: null})
+      }
     }
   }
-  console.log(gameBoardData);
-}
+  console.log(gameBoardData(boardSize));
 
-const boardSize = 3;
-console.log(buildGrid(boardSize));
+
 
 const numberOfEnemys = 2;
 
