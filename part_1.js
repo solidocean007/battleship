@@ -40,26 +40,50 @@ function buildGrid(size){
   const topLine = lineOnTop.repeat(size);
   const nextLine = boxSpace.repeat(size);
   
-  // Create data plots for board.
-  let gameBoardData = [];
-  const letters = 'ABCDEFGHIJ';                               // declare letter string for x coordinates                              // begin cycling through letters
-  const values = ['1','2','3','4','5','6','7','8','9','10'];
 
-  for(let i = 0; i < size; i++) {
-    let xChar = letters[i];
-    for(let j = 0; j < size; j++) {
-      let yNumber = values[j];
-      gameBoardData.push({[[xChar]+[yNumber]]: null})
-    
+  for(let xPlotter = 0; xPlotter < size; xPlotter++) {
+    console.log(topLine);
+    console.log(nextLine);
+    let string = '';
+    for(let i = 0; i < size; i++){
+      const letters = 'ABCDEFGHIJ'
+      letterValue = letters[xPlotter];
+      const board = [];
+      board[xPlotter] = { letterValue : xPlotter};
+
+      string += `|       |`;
     }
+    console.log(string);
+
+    let bottomLine = bottom.repeat(size);
+    console.log(bottomLine);
   }
-  console.log(gameBoardData);
 }
 
-const boardSize = 3;
+ // This function builds an array of objects that represent the plots of the board.
+ function gameBoardData(size) {
+ let gameBoardData = [];
+ for(let i = 0; i < size; i++) {
+   let xChar = boardLetters[i];
+   for(let j = 0; j < size; j++) {
+     let yNumber = boardValues[j];
+     gameBoardData.push(xChar + yNumber)
+   }
+ }
+ return gameBoardData;
+}
+ console.log(gameBoardData(boardSize));
+
+
+var readlineSync = require('readline-sync');
+// Wait for user response.
+if(readlineSync.keyIn('Press any key to start the game.   ')) {
+  }
+
+// Draw the board in the terminal.
 console.log(buildGrid(boardSize));
 
-// Create the enemy ships 
+ // Create the enemy ships 
 // console.log(createEnemyTargets());
 createEnemyTargets();
 
@@ -80,7 +104,7 @@ console.log('Type of playerShot is: '+ typeof playerShot);
 console.log(typeof enemyBoats);
 
 
-if(enemyBoats.includes(playerShot)){
+if(enemyBoats.find(playerShot)){
   console.log('Hit and sunk!')
 } else {
   console.log('miss me ha ha!');
