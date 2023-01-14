@@ -1,5 +1,5 @@
 const boardSize = 3;
-const numberOfFoes = 2;
+const numberOfFoes = 4;
 const boardLetters = ['A','B','C','D','E','F','G','H','I','J'];
 const enemyBoats = [];
 const boardValues = ['1','2','3','4','5','6','7','8','9','10'];
@@ -7,26 +7,20 @@ const boardValues = ['1','2','3','4','5','6','7','8','9','10'];
 
 
 // this function creates enemy boats and assigns them a letter and a number.
-function createEnemyTargets(){
-  const enemyBoats = [];
-  for( let shipCount = 0; shipCount < numberOfFoes; shipCount++) {
+function createEnemyTargets(totalTargets){
+  console.log(totalTargets)
+  let shipCount = 0;
+  let newShip = '';
+  while(shipCount < totalTargets && (enemyBoats.indexOf(newShip) == -1)) { // while shipcount is less than needed and newship isnt already in enemyboat array....do the following code...
     let xCoord = Math.floor(Math.random() * (boardSize) + 1)
-    xCoord === 1 ? xCoord = 'A'
-            :xCoord === 2 ? xCoord = 'B'
-            :xCoord === 3 ? xCoord = 'C'
-            :xCoord === 4 ? xCoord = 'D'
-            :xCoord === 5 ? xCoord = 'E'
-            :xCoord === 6 ? xCoord = 'F'
-            :xCoord === 7 ? xCoord = 'G'
-            :xCoord === 8 ? xCoord = 'H'
-            :xCoord === 9 ? xCoord = 'I'
-            :xCoord = 'J'
-
+      xCoord === 1 ? xCoord = 'A':xCoord === 2 ? xCoord = 'B':xCoord === 3 ? xCoord = 'C':xCoord === 4 ? xCoord = 'D':xCoord === 5 ? xCoord = 'E':xCoord === 6 ? xCoord = 'F':xCoord === 7 ? xCoord = 'G':xCoord === 8 ? xCoord = 'H':xCoord === 9 ? xCoord = 'I':xCoord = 'J'
       let yCoord = Math.floor(Math.random() * (3) + 1)
-      enemyBoats[shipCount] = String((xCoord + yCoord)); 
+      newShip =  (xCoord + yCoord); 
+      console.log(newShip);
+      enemyBoats.push(newShip); 
+      shipCount++ 
     }
-    return String(enemyBoats);
-    
+    return String(enemyBoats);  
 }
 
 // This function creates a board.
@@ -46,12 +40,11 @@ function buildGrid(size){
     console.log(nextLine);
     let string = '';
     for(let i = 0; i < size; i++){
-      const letters = 'ABCDEFGHIJ'
-      letterValue = letters[xPlotter];
+      letterValue = boardLetters[xPlotter];
       const board = [];
       board[xPlotter] = { letterValue : xPlotter};
 
-      string += `|       |`;
+      string += `|      |`;
     }
     console.log(string);
 
@@ -85,12 +78,10 @@ console.log(buildGrid(boardSize));
 
  // Create the enemy ships 
 // console.log(createEnemyTargets());
-createEnemyTargets();
+createEnemyTargets(numberOfFoes);
 
-// console.log([enemyBoats]);  // why doesn't this log the enemy boats?
+// console.log(enemyBoats);  // why doesn't this log the enemy boats?
 
-const entries = Object.entries(enemyBoats);
-console.log('entries: ' + entries)
 
 readlineSync.setDefaultOptions({limit: boardLetters});
 xAnswer = (readlineSync.question('Enter a location to strike ie "A2" A - J')).toLocaleUpperCase();
@@ -104,7 +95,7 @@ console.log('Type of playerShot is: '+ typeof playerShot);
 console.log(typeof enemyBoats);
 
 
-if(enemyBoats.find(playerShot)){
+if(enemyBoats.indexOf(playerShot) !== -1){
   console.log('Hit and sunk!')
 } else {
   console.log('miss me ha ha!');
