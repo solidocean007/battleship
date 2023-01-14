@@ -1,14 +1,13 @@
 const boardSize = 3;
-const numberOfFoes = 2;
+let numberOfFoes = 2;
 const boardLetters = ['A','B','C','D','E','F','G','H','I','J'];
-const enemyBoats = [];
+let enemyBoats = [];
 const boardValues = ['1','2','3','4','5','6','7','8','9','10'];
-
-
+const shotLocations = [];
+let playerShot = '';
 
 // this function creates enemy boats and assigns them a letter and a number.
 function createEnemyTargets(totalTargets){
-  console.log(totalTargets)
   let shipCount = 0;
   let newShip;
   let xCoord;
@@ -17,14 +16,12 @@ function createEnemyTargets(totalTargets){
       xCoord = boardLetters[xCoord];
       let yCoord = Math.floor(Math.random() * (3) + 1)
       newShip = (xCoord + yCoord); 
-      console.log(newShip);
       if(enemyBoats.indexOf(newShip) === -1){
         enemyBoats.push(newShip);
         shipCount++
       }
-    }  console.log(enemyBoats)
+    }  
 }
-
 // This function creates a board.
 function buildGrid(size){
   // create board pieces without middle block
@@ -54,7 +51,6 @@ function buildGrid(size){
     console.log(bottomLine);
   }
 }
-
  // This function builds an array of objects that represent the plots of the board.
  function gameBoardData(size) {
  let gameBoardData = [];
@@ -74,34 +70,38 @@ function takeYourShot(){
     .toLocaleUpperCase();
   readlineSync.setDefaultOptions({limit: boardValues});
   yAnswer = readlineSync.question('1 - 10');
-  let playerShot = String([xAnswer + yAnswer])
-  console.log(playerShot);
+  playerShot = String([xAnswer + yAnswer])
+  shotLocations.push(playerShot);
 }
 
 
 //Game play begins here!!
-
+var readlineSync = require('readline-sync');
+// Wait for user response.
+if(readlineSync.keyIn('Press any key to start the game.   ')) {
+  }
 
 // Draw the board in the terminal.
 console.log(buildGrid(boardSize));
 
  // Create the enemy ships 
 createEnemyTargets(numberOfFoes);
+console.log(enemyBoats) // this line is just for testing
 
-var readlineSync = require('readline-sync');
-// Wait for user response.
-if(readlineSync.keyIn('Press any key to start the game.   ')) {
+
+while( numberOfFoes > 0 ){
+  takeYourShot()
+
+  if(enemyBoats.indexOf(playerShot) !== -1){
+    enemyBoats = enemyBoats.filter(element => element !== playerShot);
+    console.log(enemyBoats);
+    numberOfFoes--
+    console.log(`Hit. You have sunk a battleship. ${numberOfFoes} ship remaining.`)
+  } else {
+    console.log('miss me ha ha!');
   }
+} console.log ('Game over!!')
 
-takeYourShot()
-
-if(enemyBoats.indexOf(playerShot) !== -1){
-  enemyBoats = enemyBoats.filter(element => element !== playerShot);
-  console.group(enemyBoats);
-  console.log('Hit and sunk!')
-} else {
-  console.log('miss me ha ha!');
-}
 
 // ** But `promptCL` method should be used instead of this. **
 

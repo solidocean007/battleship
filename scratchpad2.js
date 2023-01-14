@@ -30,3 +30,21 @@ if (my3rdString in my3rdArray) {
 } else {
   console.log(my3rdString + ' is not in the array.');
 }
+
+
+
+function createEnemyTargets(totalTargets){
+  console.log(totalTargets)
+  let shipCount = 0;
+  let newShip = '';
+  while(shipCount < totalTargets && (enemyBoats.indexOf(newShip) == -1)) { // while shipcount is less than needed and newship isnt already in enemyboat array....do the following code...
+    let xCoord = Math.floor(Math.random() * (boardSize) + 1)
+      xCoord === 1 ? xCoord = 'A':xCoord === 2 ? xCoord = 'B':xCoord === 3 ? xCoord = 'C':xCoord === 4 ? xCoord = 'D':xCoord === 5 ? xCoord = 'E':xCoord === 6 ? xCoord = 'F':xCoord === 7 ? xCoord = 'G':xCoord === 8 ? xCoord = 'H':xCoord === 9 ? xCoord = 'I':xCoord = 'J'
+      let yCoord = Math.floor(Math.random() * (3) + 1)
+      newShip =  (xCoord + yCoord); 
+      console.log(newShip);
+      enemyBoats.push(newShip); 
+      shipCount++ 
+    }
+    return String(enemyBoats);  
+}
