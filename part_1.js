@@ -1,5 +1,5 @@
 const boardSize = 3;
-const numberOfFoes = 4;
+const numberOfFoes = 2;
 const boardLetters = ['A','B','C','D','E','F','G','H','I','J'];
 const enemyBoats = [];
 const boardValues = ['1','2','3','4','5','6','7','8','9','10'];
@@ -10,17 +10,19 @@ const boardValues = ['1','2','3','4','5','6','7','8','9','10'];
 function createEnemyTargets(totalTargets){
   console.log(totalTargets)
   let shipCount = 0;
-  let newShip = '';
-  while(shipCount < totalTargets && (enemyBoats.indexOf(newShip) == -1)) { // while shipcount is less than needed and newship isnt already in enemyboat array....do the following code...
-    let xCoord = Math.floor(Math.random() * (boardSize) + 1)
-      xCoord === 1 ? xCoord = 'A':xCoord === 2 ? xCoord = 'B':xCoord === 3 ? xCoord = 'C':xCoord === 4 ? xCoord = 'D':xCoord === 5 ? xCoord = 'E':xCoord === 6 ? xCoord = 'F':xCoord === 7 ? xCoord = 'G':xCoord === 8 ? xCoord = 'H':xCoord === 9 ? xCoord = 'I':xCoord = 'J'
+  let newShip;
+  let xCoord;
+  while(shipCount < totalTargets) { 
+      xCoord = Math.floor(Math.random() * (boardSize) + 1)
+      xCoord = boardLetters[xCoord];
       let yCoord = Math.floor(Math.random() * (3) + 1)
-      newShip =  (xCoord + yCoord); 
+      newShip = (xCoord + yCoord); 
       console.log(newShip);
-      enemyBoats.push(newShip); 
-      shipCount++ 
-    }
-    return String(enemyBoats);  
+      if(enemyBoats.indexOf(newShip) === -1){
+        enemyBoats.push(newShip);
+        shipCount++
+      }
+    }  console.log(enemyBoats)
 }
 
 // This function creates a board.
@@ -65,37 +67,37 @@ function buildGrid(size){
  }
  return gameBoardData;
 }
- console.log(gameBoardData(boardSize));
+// This function gets the users shot at the enemy location.
+function takeYourShot(){
+  readlineSync.setDefaultOptions({limit: boardLetters});
+  xAnswer = (readlineSync.question('Enter a location to strike ie "A2" A - J'))
+    .toLocaleUpperCase();
+  readlineSync.setDefaultOptions({limit: boardValues});
+  yAnswer = readlineSync.question('1 - 10');
+  let playerShot = String([xAnswer + yAnswer])
+  console.log(playerShot);
+}
 
+
+//Game play begins here!!
+
+
+// Draw the board in the terminal.
+console.log(buildGrid(boardSize));
+
+ // Create the enemy ships 
+createEnemyTargets(numberOfFoes);
 
 var readlineSync = require('readline-sync');
 // Wait for user response.
 if(readlineSync.keyIn('Press any key to start the game.   ')) {
   }
 
-// Draw the board in the terminal.
-console.log(buildGrid(boardSize));
-
- // Create the enemy ships 
-// console.log(createEnemyTargets());
-createEnemyTargets(numberOfFoes);
-
-// console.log(enemyBoats);  // why doesn't this log the enemy boats?
-
-
-readlineSync.setDefaultOptions({limit: boardLetters});
-xAnswer = (readlineSync.question('Enter a location to strike ie "A2" A - J')).toLocaleUpperCase();
-
-readlineSync.setDefaultOptions({limit: boardValues});
-yAnswer = readlineSync.question('1 - 10');
-
-let playerShot = String([xAnswer + yAnswer])
-console.log(playerShot);
-console.log('Type of playerShot is: '+ typeof playerShot);
-console.log(typeof enemyBoats);
-
+takeYourShot()
 
 if(enemyBoats.indexOf(playerShot) !== -1){
+  enemyBoats = enemyBoats.filter(element => element !== playerShot);
+  console.group(enemyBoats);
   console.log('Hit and sunk!')
 } else {
   console.log('miss me ha ha!');
