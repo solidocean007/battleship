@@ -1,4 +1,4 @@
-const boardSize = 3;
+const boardSize = 10;
 let numberOfFoes = 2;
 const boardLetters = ['A','B','C','D','E','F','G','H','I','J'];
 const boardValues = ['1','2','3','4','5','6','7','8','9','10'];
@@ -54,15 +54,18 @@ function buildGrid(size){
  // This function builds an array of objects that represent the plots of the board.
  function gameBoardData(size) {
  let gameBoardData = [];
+ let plotCount = 1;
  for(let i = 0; i < size; i++) {
    let xChar = boardLetters[i];
    for(let j = 0; j < size; j++) {
      let yNumber = boardValues[j];
-     gameBoardData.push(xChar + yNumber)
+     gameBoardData.push({index : plotCount, id:xChar + yNumber})
+     plotCount++
    }
  }
  return gameBoardData;
 }
+
 // This function gets the users shot at the enemy location.
 function takeYourShot(){
   shotInput = readlineSync.question('Enter a location to strike ie "A2"   ');
@@ -79,7 +82,7 @@ function takeYourShot(){
   let playerShot = '';
 
 do{
-  
+  console.log(gameBoardData(boardSize))
    //Game play begins here!!
    var readlineSync = require('readline-sync');
    // Wait for user response.
