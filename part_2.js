@@ -59,7 +59,12 @@ function buildGrid(size){
    let xChar = boardLetters[i];
    for(let j = 0; j < size; j++) {
      let yNumber = boardValues[j];
-     gameBoardData.push({index : plotCount, id:xChar + yNumber})
+     gameBoardData.push({
+      index : plotCount,
+      id:xChar + yNumber,
+      plotLetter : xChar,
+      plotNumber : yNumber
+    })
      plotCount++
    }
  }
