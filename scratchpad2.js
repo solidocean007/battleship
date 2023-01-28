@@ -1,50 +1,61 @@
-// 1st example
-const my2ndArray = ['apple', 'banana', 'orange'];
-const my2ndString = 'banana';
+const boardLetters = [".", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+const size = 10;
 
-if (my2ndArray.indexOf(my2ndString) !== -1) {
-  console.log(my2ndString + ' is in the array.'); // banana is in the array
-} else {
-  console.log(my2ndString + ' is not in the array.');
+// This function creates a random number
+function randNum(length) {
+  let x = 0;
+  do{
+    x = Math.ceil(Math.random() * 10);
+  } while( x - length < 0)
+  return x
 }
 
 
-
-// 2nd example
-const myArray = ['apple', 'banana', 'orange'];
-const myString = 'banana';
-
-if (myString in myArray) {
-  console.log(myString + ' is in the array.');
-} else {
-  console.log(myString + ' is not in the array.'); 
-}  // banana is not in the array.
-
-
-// 3rd example
-let my3rdArray = ['one', 'two', 'three'];
-let my3rdString = 'three';
-
-if (my3rdString in my3rdArray) {
-  console.log(my3rdString + ' is in the array.');
-} else {
-  console.log(my3rdString + ' is not in the array.');
-}
-
-
-
-function createEnemyTargets(totalTargets){
-  console.log(totalTargets)
-  let shipCount = 0;
-  let newShip = '';
-  while(shipCount < totalTargets && (enemyBoats.indexOf(newShip) == -1)) { // while shipcount is less than needed and newship isnt already in enemyboat array....do the following code...
-    let xCoord = Math.floor(Math.random() * (boardSize) + 1)
-      xCoord === 1 ? xCoord = 'A':xCoord === 2 ? xCoord = 'B':xCoord === 3 ? xCoord = 'C':xCoord === 4 ? xCoord = 'D':xCoord === 5 ? xCoord = 'E':xCoord === 6 ? xCoord = 'F':xCoord === 7 ? xCoord = 'G':xCoord === 8 ? xCoord = 'H':xCoord === 9 ? xCoord = 'I':xCoord = 'J'
-      let yCoord = Math.floor(Math.random() * (3) + 1)
-      newShip =  (xCoord + yCoord); 
-      console.log(newShip);
-      enemyBoats.push(newShip); 
-      shipCount++ 
+// This function builds an array of objects that represent the plots of the board.
+function gameBoardData(size) {
+  let gameBoard = [];
+  for (let i = 1; i <= size; i++) {
+    let xChar = boardLetters[i];
+    for (let j = 1; j <= size; j++) {
+      let yNumber = j;
+      gameBoard.push({
+        id: xChar + yNumber,
+        // plotLetter : xChar,
+        // plotNumber : yNumber,
+        occupied: false,
+      });
     }
-    return String(enemyBoats);  
+  }
+  return gameBoard;
 }
+gameBoardData(size)
+let board = gameBoardData(size);
+console.log(board)
+
+
+function leftToRightShipMaker(length) {
+  let shipArray = [];
+  let yNumber = 0;
+  let xLetter = '';
+  
+  for(let i = 0; i < 5; i++){
+    do {
+      xLetter = boardLetters[randNum()];
+      yNumber = randNum(length) - length;
+      for (let i = 1; i <= length; i++) {
+        board.find((plot) => plot.id === (xLetter + yNumber + i)).occupied = true;
+        shipArray.push(xLetter + (yNumber + i));
+    }
+  
+    } while (yNumber < 0 );
+    // console.log(yNumber + " : is yNumber");
+    
+    // console.log(board.filter(a => a.id === (xLetter + yNumber)))
+  
+    console.log(shipArray);
+  }
+}
+
+leftToRightShipMaker(3);
+console.log(board)
+

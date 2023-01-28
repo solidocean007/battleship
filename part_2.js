@@ -60,10 +60,10 @@ function buildGrid(size){
    for(let j = 0; j < size; j++) {
      let yNumber = boardValues[j];
      gameBoardData.push({
-      index : plotCount,
       id:xChar + yNumber,
-      plotLetter : xChar,
-      plotNumber : yNumber
+      // plotLetter : xChar,
+      // plotNumber : yNumber,
+      occupied : false,
     })
      plotCount++
    }
