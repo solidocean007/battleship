@@ -1,7 +1,7 @@
 const boardLetters = [".", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const size = 10;
 
-// This function creates a random number
+// This function creates a random number bigger than the length of a ship
 function randNum(length) {
   let x = 0;
   do{
@@ -11,7 +11,9 @@ function randNum(length) {
 }
 
 
-// This function builds an array of objects that represent the plots of the board.
+/* This function builds an array of objects 
+  that represent the plots of the board. */
+
 function gameBoardData(size) {
   let gameBoard = [];
   for (let i = 1; i <= size; i++) {
@@ -20,15 +22,13 @@ function gameBoardData(size) {
       let yNumber = j;
       gameBoard.push({
         id: xChar + yNumber,
-        // plotLetter : xChar,
-        // plotNumber : yNumber,
         occupied: false,
       });
     }
   }
   return gameBoard;
 }
-gameBoardData(size)
+
 let board = gameBoardData(size);
 console.log(board)
 
@@ -37,8 +37,7 @@ function leftToRightShipMaker(length) {
   let shipArray = [];
   let yNumber = 0;
   let xLetter = '';
-  
-  for(let i = 0; i < 5; i++){
+  // I need to call the random direction in this function and rename this function to ship builder
     do {
       xLetter = boardLetters[randNum()];
       yNumber = randNum(length) - length;
@@ -53,7 +52,7 @@ function leftToRightShipMaker(length) {
     // console.log(board.filter(a => a.id === (xLetter + yNumber)))
   
     console.log(shipArray);
-  }
+  
 }
 
 leftToRightShipMaker(3);

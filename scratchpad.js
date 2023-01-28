@@ -27,20 +27,20 @@ function findNewRoom(plotsOccupied , newRandomSpots){
 
 }
 
-console.log(findNewRoom(array1, array2))
+// console.log(findNewRoom(array1, array2) )
 
 const array3 = [{id: 'A1', occupied: false}, {id: 'B2', occupied: false}, {id: 'C3', occupied: false}, {id: 'D4', occupied: false}, {id: 'E5', occupied: false}, {id: 'F6', occupied: false}];
 const array4 = [ 'A1', 'J5'];
 
-function findNewRoom(plotsOccupied, newRandomSpots) {
-  plotsOccupied.forEach(room => {
-    if (newRandomSpots.includes(room.id)){
-      room.occupied = true;
+function findNewRoom(theBoard, newRandomSpots) {
+  theBoard.forEach(plot => {
+    if (newRandomSpots.includes(plot.id)){
+      plot.occupied = true;
     }
   });
-  return plotsOccupied;
+  return theBoard;
 }
-console.log(findNewRoom(array3, array4))
+// console.log(findNewRoom(array3, array4))
 
 
 // let array1 = ['apple', 'banana', 'orange'];
@@ -51,3 +51,45 @@ console.log(findNewRoom(array3, array4))
 // } else {
 //   console.log('There are no common elements in the arrays');
 // }
+
+
+function buildArrayOfPlots(spot, length, direction){
+  let plots = [];
+  let xLetter = spot.slice(0,1);
+  let yNumber = Number(spot.slice(1));
+  console.log(xLetter + ' is xLetter')
+  console.log(yNumber + ' is yNumber')
+  if(direction === 'horizontal'){
+    for(let i = 0; i <= length; i++){
+      plots.push(xLetter + Number(yNumber + i))
+    }
+    return plots;
+  } else {
+    let letterPlace = boardLetters.indexOf(xLetter);
+  for(let i = 0; i <= length; i++){
+    plots.push(boardLetters[letterPlace + i] + yNumber)
+  }
+  return plots;
+  }
+}
+
+// console.log(buildArrayOfPlots('A3', 4, 'vertical'))
+
+//create an array of objects with ids and compare it to another
+
+const array5 = [
+  {id: 'A1'},
+  {id: 'A2'},
+  {id: 'A3'},
+  {id: 'A4'},
+  {id: 'A5'},
+  {id: 'A6'},
+]
+
+const array6 = ['A1', 'A2']
+
+array5.includes(array6)
+
+for(let plot of array6){
+  
+}
