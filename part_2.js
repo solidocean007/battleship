@@ -38,7 +38,7 @@ function buildGrid(size) {
 
 function gameBoardData(size) {
   let gameBoard = [];
-  for (let i = 1; i <= size; i++) {
+  for (let i = 0; i < size; i++) {
     let xChar = boardLetters[i];
     for (let j = 1; j <= size; j++) {
       let yNumber = j;
@@ -54,7 +54,7 @@ function gameBoardData(size) {
 /* This function return random 'vertical' or 'horizontal' */
 function whichWay() {
   theWay = Math.random() > 0.5 ? "vertical" : "horizontal";
-  console.log(theWay);
+  // console.log(theWay);
   return theWay;
 }
 
@@ -81,7 +81,7 @@ function takeYourShot() {
 
 /* This function takes a spot, length and direction and builds 
   an array of possible locations */
-  function buildArrayOfPlots(spot, length, direction){
+function buildArrayOfPlots(spot, length, direction){
     let plots = [];
     let xLetter = spot.slice(0,1);
     let yNumber = Number(spot.slice(1));
@@ -99,7 +99,13 @@ function takeYourShot() {
     }
     return plots;
     }
-  }
+}
+
+// This function returns true if ship spots are real board spots
+function checkForRoom(theBoardSpots, theShipSpots) {
+  return theShipSpots.every(value => theBoardSpots
+  .some(obj => obj.id === value));
+}
 
 
 
@@ -107,14 +113,23 @@ let enemyBoats = [];
 let playerShot = "";
 //Game play begins here!!
 do {
-  console.log(gameBoardData(boardSize));
+  gameBoardData(boardSize);
   var readlineSync = require("readline-sync");
   // Wait for user response.
   if (readlineSync.keyIn("Press any key to start the game.   ")) {
   }
-
   // Draw the board in the terminal.
   console.log(buildGrid(boardSize));
+
+  //Build enemy ship size 5 plots
+  let enemyFive = [];
+  let enemyFiveStartLetter = boardLetters[Math.ceil(Math.random() * 10)]
+  let enemyFiveStartNumber = randNum();
+  let enemyFiveDirection = whichWay();
+  console.log(enemyFiveStartLetter)
+  console.log(enemyFiveStartNumber)
+  console.log(enemyFiveDirection)
+
 
   while (numberOfFoes > 0) {
     takeYourShot();
