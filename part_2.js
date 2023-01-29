@@ -58,13 +58,15 @@ function whichWay() {
   return theWay;
 }
 
+// This function creates a random Letter for the x-axis
+function getLetter(){
+  return boardLetters[Math.ceil(Math.random() * 10)]
+}
+boardLetters[Math.ceil(Math.random() * 10)]
+
 // This function creates a random number bigger than the length of a ship
-function randNum(length) {
-  let x = 0;
-  do{
-    x = Math.ceil(Math.random() * 10);
-  } while( x - length < 0)
-  return x
+function getNumber() {
+  return Math.ceil(Math.random() * 10)
 }
 
 // This function gets the users shot at the enemy location.
@@ -85,16 +87,14 @@ function buildArrayOfPlots(spot, length, direction){
     let plots = [];
     let xLetter = spot.slice(0,1);
     let yNumber = Number(spot.slice(1));
-    console.log(xLetter + ' is xLetter')
-    console.log(yNumber + ' is yNumber')
     if(direction === 'horizontal'){
-      for(let i = 0; i <= length; i++){
+      for(let i = 0; i < length; i++){
         plots.push(xLetter + Number(yNumber + i))
       }
       return plots;
     } else {
       let letterPlace = boardLetters.indexOf(xLetter);
-    for(let i = 0; i <= length; i++){
+    for(let i = 0; i < length; i++){
       plots.push(boardLetters[letterPlace + i] + yNumber)
     }
     return plots;
@@ -113,7 +113,7 @@ let enemyBoats = [];
 let playerShot = "";
 //Game play begins here!!
 do {
-  gameBoardData(boardSize);
+  let board = gameBoardData(boardSize);
   var readlineSync = require("readline-sync");
   // Wait for user response.
   if (readlineSync.keyIn("Press any key to start the game.   ")) {
@@ -122,14 +122,18 @@ do {
   console.log(buildGrid(boardSize));
 
   //Build enemy ship size 5 plots
-  let enemyFive = [];
-  let enemyFiveStartLetter = boardLetters[Math.ceil(Math.random() * 10)]
-  let enemyFiveStartNumber = randNum();
-  let enemyFiveDirection = whichWay();
-  console.log(enemyFiveStartLetter)
-  console.log(enemyFiveStartNumber)
-  console.log(enemyFiveDirection)
-
+  function shipMaker(size){
+    do {
+    let startSpot = (getLetter() + getNumber());
+    console.log(startSpot + ' : startSpot')
+    let verticalOrHorizontal = whichWay();
+    let places = buildArrayOfPlots(startSpot, size, verticalOrHorizontal);
+    } while(!checkForRoom(board, places))
+    console.log(example)
+    
+  }
+  
+  console.log(shipMaker(5))
 
   while (numberOfFoes > 0) {
     takeYourShot();
