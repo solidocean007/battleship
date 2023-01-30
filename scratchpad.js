@@ -4,17 +4,6 @@ const boardLetters = ['A','B','C','D','E','F','G','H','I','J'];
 const enemyBoats = [];
 const boardValues = ['1','2','3','4','5','6','7','8','9','10'];
 
-
-
-class shipBuilder {
-  constructor(shipLength) {
-    this.shipLength = shipLength
-    // this.axisSpots = axisSpots
-  }
-}
-
-const testShipOne = new shipBuilder(4)
-
 // console.log(testShipOne)
 
 function buildArrayOfPlots(spot, length, direction){
@@ -50,13 +39,8 @@ const array5 = [
   {id: 'A6'},
 ]
 
-const array6 = ['A4', 'A5']
+const array6 = [['A4', 'A3'],['B5', 'B6'],['C7', 'C8']]
 
-function checkForRoom(theBoardSpots, theShipSpots) {
-  return theShipSpots.every(value => theBoardSpots
-  .some(obj => obj.id === value));
-}
 
-console.log(checkForRoom(array5, array6))
-
+console.log(array6.length)
 

@@ -1,8 +1,7 @@
 const boardSize = 10;
-let numberOfFoes = 2;
 const boardLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-const shotLocations = [];
-let endGame = false;
+// const shotLocations = [];
+// let endGame = false;
 
 // This function creates a board.
 function buildGrid(size) {
@@ -33,9 +32,7 @@ function buildGrid(size) {
   }
 }
 
-/* This function builds an array of objects 
-  that represent the data plots of the board. */
-
+// This function builds data plots of the board.
 function gameBoardData(size) {
   let gameBoard = [];
   for (let i = 0; i < size; i++) {
@@ -60,11 +57,10 @@ function whichWay() {
 
 // This function creates a random Letter for the x-axis
 function getLetter(){
-  return boardLetters[Math.ceil(Math.random() * 10)]
+  return boardLetters[Math.floor(Math.random() * boardLetters.length)]
 }
-boardLetters[Math.ceil(Math.random() * 10)]
 
-// This function creates a random number bigger than the length of a ship
+// This function creates a random number
 function getNumber() {
   return Math.ceil(Math.random() * 10)
 }
@@ -102,18 +98,57 @@ function buildArrayOfPlots(spot, length, direction){
 }
 
 // This function returns true if ship spots are real board spots
-function checkForRoom(theBoardSpots, theShipSpots) {
-  return theShipSpots.every(value => theBoardSpots
-  .some(obj => obj.id === value));
+function checkForRoom(shipSpots, realSpots) {
+  for (const plot of shipSpots) {
+    const actualSpot = realSpots.find(spot => spot.id === plot);
+    if (!actualSpot || actualSpot.occupied) {
+      return false;
+    } else {
+      actualSpot.occupied = true;
+    }
+  }
+
+  return true;
 }
 
 
 
-let enemyBoats = [];
-let playerShot = "";
+const size = boardSize;
+let board = gameBoardData(size)
+let allShipsArray = [];
+let shipFive = [];
+let shipFour = [];
+let shipThreeTwo = [];
+let shipThreeOne = [];
+let shipTwo = [];
+
+function shipBuilder(boatLength, ship) {
+  let verticalOrHorizontal;
+  let startSpot;
+  do {
+    verticalOrHorizontal = whichWay();
+    startSpot = getLetter() + getNumber();
+    ship = buildArrayOfPlots(startSpot, boatLength, verticalOrHorizontal);
+  } while (!checkForRoom(ship, board));
+  console.log("ship: " + ship);
+  return ship
+}
+
+shipFive = shipBuilder(5, shipFive)
+shipFour = shipBuilder(4, shipFour)
+shipThreeOne = shipBuilder(3, shipThreeOne)
+shipThreeTwo = shipBuilder(3, shipThreeTwo)
+shipTwo = shipBuilder(2, shipTwo)
+
+allShipsArray = [shipFive, shipFour, shipThreeOne, shipThreeTwo, shipTwo];
+
+console.log("gameBoardData with updated occupied values: ", board);
+console.log(allShipsArray)
+
+
+
 //Game play begins here!!
 do {
-  let board = gameBoardData(boardSize);
   var readlineSync = require("readline-sync");
   // Wait for user response.
   if (readlineSync.keyIn("Press any key to start the game.   ")) {
@@ -121,20 +156,7 @@ do {
   // Draw the board in the terminal.
   console.log(buildGrid(boardSize));
 
-  //Build enemy ship size 5 plots
-  function shipMaker(size){
-    do {
-    let startSpot = (getLetter() + getNumber());
-    console.log(startSpot + ' : startSpot')
-    let verticalOrHorizontal = whichWay();
-    let places = buildArrayOfPlots(startSpot, size, verticalOrHorizontal);
-    } while(!checkForRoom(board, places))
-    console.log(example)
-    
-  }
   
-  console.log(shipMaker(5))
-
   while (numberOfFoes > 0) {
     takeYourShot();
     if (enemyBoats.includes(playerShot)) {
@@ -155,3 +177,4 @@ do {
   );
   console.log(endGame);
 } while (endGame);
+
