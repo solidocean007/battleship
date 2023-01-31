@@ -162,8 +162,6 @@ do {
 
   allShipsArray = [shipFive, shipFour, shipThreeOne, shipThreeTwo, shipTwo];
 
-  console.log(allShipsArray);
-
   //Game play begins here!! ******************************************
   var readlineSync = require("readline-sync");
   // Wait for user response.
