@@ -86,7 +86,7 @@ function sinkSectionOfBoat(shot, enemyFleet, board) {
         console.log("You have hit a battleship!");
         let hitSpot = board.find((obj) => obj.id === shot);
         hitSpot.damage = "Hit";
-        buildGrid(size, board)
+        console.log(buildGrid(size, board))
         return;
       }
     }
@@ -173,7 +173,7 @@ do {
   do {
     let shot = takeYourShot();
     sinkSectionOfBoat(shot, allShipsArray, board);
-    console.log(buildGrid(size, board));
+    // console.log(buildGrid(size, board));
   } while (!checkIfAllSunk(allShipsArray));
 
   endGame = readlineSync.keyInYN(
